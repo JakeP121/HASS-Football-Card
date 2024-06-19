@@ -262,7 +262,7 @@ class JakesFootballTrackerCard extends HTMLElement {
         if (fixture.fixture.location !== null)
         {
             if (match_location != "") {
-                match_location += " || ";
+                match_location += ", ";
             }
 
             match_location += fixture.fixture.location;
