@@ -20,6 +20,6 @@ entity: sensor.jft_team_wales
 
 ## Arguments
 | Name | Description | Required |  Values |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | `entity` | Name of the HASS-Football team sensor | Yes  | sensor.jft_{your_team} |
 | `show_upcoming_fixture` | Display the upcoming fixture, instead of the current/previous fixture | No  | true/false |
