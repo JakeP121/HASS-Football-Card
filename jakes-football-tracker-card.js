@@ -3,6 +3,7 @@ class JakesFootballTrackerCard extends HTMLElement {
         type: custom:jakes-football-tracker-card
         entity: sensor.jft_team_wales
         show_upcoming_fixture: true (optional)
+        show_background_logos: false (optional)
     */
 
     // Whenever the state changes, a new `hass` object is set. Use this to
@@ -19,6 +20,11 @@ class JakesFootballTrackerCard extends HTMLElement {
             </ha-card>
             `;
             this.content = this.querySelector("div");
+        }
+
+        if (!hass)
+        {
+            return;
         }
 
         const entityId = this.config.entity;
@@ -73,7 +79,6 @@ class JakesFootballTrackerCard extends HTMLElement {
             margin: 0;
             background-color: #f0f0f0;
             position: relative;
-            overflow: hidden;
         }
 
         .container {
@@ -86,6 +91,7 @@ class JakesFootballTrackerCard extends HTMLElement {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             z-index: 1;
             overflow: hidden;
+            padding: 5px 0px;
         }
 
         .match-title {
@@ -95,6 +101,7 @@ class JakesFootballTrackerCard extends HTMLElement {
 
         .match-location {
             opacity: 0.6;
+            text-align: center;
         }
 
         .match-status {
@@ -104,7 +111,6 @@ class JakesFootballTrackerCard extends HTMLElement {
 
         .scoreboard {
             display: flex;
-            margin: 10px 0px;
         }
 
         .team {
@@ -122,7 +128,7 @@ class JakesFootballTrackerCard extends HTMLElement {
 
         .team-name {
             font-size: 1.5em;
-            margin: 10px 0;
+            margin: 0px 0px 10px 0;
             font-weight: bold;
         }
 
@@ -130,7 +136,7 @@ class JakesFootballTrackerCard extends HTMLElement {
             display: flex;
             flex-direction: column;
             opacity: 0.6;
-            margin: auto 50px;
+            margin: auto 10px;
             align-items: center;
         }
 
@@ -151,22 +157,11 @@ class JakesFootballTrackerCard extends HTMLElement {
 
         .background-logo {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             opacity: 0.1;
             width: 150px;
             height: 150px;
             z-index: -1;
-        }
-
-        .background-logo img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            overflow: visible;
         }
         `;
     }
@@ -187,9 +182,7 @@ class JakesFootballTrackerCard extends HTMLElement {
             </div>
             <div class="scoreboard">
                 <div class="team">
-                    <div class="background-logo">
-                        <img src="${fixture.home_team.logo}" alt="${fixture.home_team.name} Background Logo">
-                    </div>
+                    ${ this.showBackgroundLogos(fixture.home_team) }
                     <img src="${fixture.home_team.logo}" alt="${fixture.home_team.name} Logo" class="team-logo">
                     <span class="team-name">${fixture.home_team.name}</span>
                 </div>
@@ -200,9 +193,7 @@ class JakesFootballTrackerCard extends HTMLElement {
                     <div class="timer">${match_time}</div>
                 </div>
                 <div class="team">
-                    <div class="background-logo">
-                        <img src="${fixture.away_team.logo}" alt="${fixture.away_team.name} Background Logo">
-                    </div>
+                    ${ this.showBackgroundLogos(fixture.away_team) }
                     <img src="${fixture.away_team.logo}" alt="${fixture.away_team.name} Logo" class="team-logo">
                     <span class="team-name">${fixture.away_team.name}</span>
                 </div>
@@ -226,9 +217,7 @@ class JakesFootballTrackerCard extends HTMLElement {
             </div>
             <div class="scoreboard">
                 <div class="team">
-                    <div class="background-logo">
-                        <img src="${fixture.home_team.logo}" alt="${fixture.home_team.name} Background Logo">
-                    </div>
+                    ${ this.showBackgroundLogos(fixture.home_team) }
                     <img src="${fixture.home_team.logo}" alt="${fixture.home_team.name} Logo" class="team-logo">
                     <span class="team-name">${fixture.home_team.name}</span>
                 </div>
@@ -238,9 +227,7 @@ class JakesFootballTrackerCard extends HTMLElement {
                     </div>
                 </div>
                 <div class="team">
-                    <div class="background-logo">
-                        <img src="${fixture.away_team.logo}" alt="${fixture.away_team.name} Background Logo">
-                    </div>
+                    ${ this.showBackgroundLogos(fixture.away_team) }
                     <img src="${fixture.away_team.logo}" alt="${fixture.away_team.name} Logo" class="team-logo">
                     <span class="team-name">${fixture.away_team.name}</span>
                 </div>
@@ -270,10 +257,22 @@ class JakesFootballTrackerCard extends HTMLElement {
 
         return match_location;
     }
+
+    showBackgroundLogos(team) {
+        if (!this.config.show_background_logos) {
+            return ''
+        }
+
+        return `
+        <div class="background-logo">
+            <img src="${team.logo}" alt="${team.name} Background Logo">
+        </div>
+        `
+    }
 }
 
 console.info("%c Jake's Football Tracker Card %s IS INSTALLED",
 "color: green; font-weight: bold",
-    "v0.1.1");
+    "v0.1.20");
 
 customElements.define("jakes-football-tracker-card", JakesFootballTrackerCard);
