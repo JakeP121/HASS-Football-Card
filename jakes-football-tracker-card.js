@@ -97,6 +97,7 @@ class JakesFootballTrackerCard extends HTMLElement {
         .match-title {
             font-weight: bold;
             font-size: 1.1em;
+            text-align: center;
         }
 
         .match-location {
@@ -107,6 +108,7 @@ class JakesFootballTrackerCard extends HTMLElement {
         .match-status {
             font-weight: bold;
             font-size: 1.2em;
+            text-align: center;
         }
 
         .scoreboard {
@@ -118,6 +120,7 @@ class JakesFootballTrackerCard extends HTMLElement {
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 45%;
         }
 
         .team-logo {
@@ -130,6 +133,7 @@ class JakesFootballTrackerCard extends HTMLElement {
             font-size: 1.5em;
             margin: 0px 0px 10px 0;
             font-weight: bold;
+            text-align: center;
         }
 
         .match-data {
@@ -138,6 +142,7 @@ class JakesFootballTrackerCard extends HTMLElement {
             opacity: 0.6;
             margin: auto 10px;
             align-items: center;
+            width: 10%;
         }
 
         .score {
@@ -167,9 +172,19 @@ class JakesFootballTrackerCard extends HTMLElement {
     }
 
     generateFixtureCard(fixture, match_in_progress) {
-        var match_time = ""
+        var match_time = "0'";
+        var goals_home = 0;
+        var goals_away = 0;
         if (match_in_progress) {
-            match_time = fixture.fixture.status.elapsed.toString() + '\'';
+            if (fixture.fixture.status.elapsed)
+            {
+                match_time = fixture.fixture.status.elapsed.toString() + '\'';
+            }
+            if (fixture.goals)
+            {
+                goals_home = fixture.goals.home;
+                goals_away = fixture.goals.away;
+            }
         }
 
         this.content.innerHTML = `
@@ -273,6 +288,6 @@ class JakesFootballTrackerCard extends HTMLElement {
 
 console.info("%c Jake's Football Tracker Card %s IS INSTALLED",
 "color: green; font-weight: bold",
-    "v0.1.20");
+    "v0.1.21");
 
 customElements.define("jakes-football-tracker-card", JakesFootballTrackerCard);
