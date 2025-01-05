@@ -173,18 +173,23 @@ class JakesFootballTrackerCard extends HTMLElement {
 
     generateFixtureCard(fixture, match_in_progress) {
         var match_time = "0'";
-        var goals_home = 0;
-        var goals_away = 0;
         if (match_in_progress) {
             if (fixture.fixture.status.elapsed)
             {
                 match_time = fixture.fixture.status.elapsed.toString() + '\'';
             }
-            if (fixture.goals)
-            {
-                goals_home = fixture.goals.home;
-                goals_away = fixture.goals.away;
-            }
+        }
+        else
+        {
+            match_time = ""
+        }
+
+        var goals_home = 0;
+        var goals_away = 0;
+        if (fixture.goals)
+        {
+            goals_home = fixture.goals.home;
+            goals_away = fixture.goals.away;
         }
 
         this.content.innerHTML = `
@@ -203,7 +208,7 @@ class JakesFootballTrackerCard extends HTMLElement {
                 </div>
                 <div class="match-data">
                     <div class="score">
-                        <span class="team-score">${fixture.goals.home}</span><span class="score-divider"> - </span><span class="team-score">${fixture.goals.away}</span>
+                        <span class="team-score">${goals_home}</span><span class="score-divider"> - </span><span class="team-score">${goals_away}</span>
                     </div>
                     <div class="timer">${match_time}</div>
                 </div>
@@ -287,7 +292,7 @@ class JakesFootballTrackerCard extends HTMLElement {
 }
 
 console.info("%c Jake's Football Tracker Card %s IS INSTALLED",
-"color: green; font-weight: bold",
-    "v0.1.21");
+    "color: green; font-weight: bold",
+    "v0.1.3");
 
 customElements.define("jakes-football-tracker-card", JakesFootballTrackerCard);
