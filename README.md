@@ -16,8 +16,8 @@ A Home Assistant Lovelace card to display JakeP121/HASS-Football data
 - Copy jakes-football-tracker-card.js into the directory.
 - Go to Settings > Dashboards and click the hamburger menu in the top right to go to Resources.
 - Add a resource with the following values:
-url: /local/community/jakes-football-tracker-card/jakes-football-tracker-card.js
-type: Javascript Module
+  -  url: /local/community/jakes-football-tracker-card/jakes-football-tracker-card.js
+  - type: Javascript Module
 - Reload HomeAssistant and then you should be able to add the card to your dashboards.
 
 ## Adding card to your dashboard
