@@ -156,6 +156,22 @@ class JakesFootballTrackerCard extends HTMLElement {
             margin: 5pt;
         }
 
+        .penalty-shootout {
+            align-items: center;
+        }
+        
+        .penalty-shootout-heading {
+            display: flex;
+            font-size: 1em;
+            text-align: center
+        }
+
+        .penalty-shootout-score {
+            font-weight: bold;
+            font-size: 1em;
+            text-align: center
+        }
+
         .timer {
             text-align: center;
         }
@@ -210,6 +226,7 @@ class JakesFootballTrackerCard extends HTMLElement {
                     <div class="score">
                         <span class="team-score">${goals_home}</span><span class="score-divider"> - </span><span class="team-score">${goals_away}</span>
                     </div>
+                    ${ this.showPenaltyShootout(fixture.penalty_shootout) }
                     <div class="timer">${match_time}</div>
                 </div>
                 <div class="team">
@@ -289,10 +306,25 @@ class JakesFootballTrackerCard extends HTMLElement {
         </div>
         `
     }
+
+    showPenaltyShootout(penalty_shootout) {
+        if (!penalty_shootout.home == null || !penalty_shootout.away) {
+            return ''
+        }
+
+        return `
+        <div>
+        <div class="penalty-shootout-score">
+            <span>${penalty_shootout.home}</span><span class="score-divider"> - </span><span>${penalty_shootout.away}</span>
+        </div>
+        <div class="penalty-shootout-heading">(penalties)</div>
+        </div>
+        `
+    }
 }
 
 console.info("%c Jake's Football Tracker Card %s IS INSTALLED",
     "color: green; font-weight: bold",
-    "v0.1.3");
+    "v0.2.0");
 
 customElements.define("jakes-football-tracker-card", JakesFootballTrackerCard);
