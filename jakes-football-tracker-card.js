@@ -325,6 +325,6 @@ class JakesFootballTrackerCard extends HTMLElement {
 
 console.info("%c Jake's Football Tracker Card %s IS INSTALLED",
     "color: green; font-weight: bold",
-    "v0.2.0");
+    "v0.3.0");
 
 customElements.define("jakes-football-tracker-card", JakesFootballTrackerCard);
